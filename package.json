@@ -1,12 +1,10 @@
 {
-  "name": "vdooom",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "learning-react",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+    "start:dev": "yarn workspace create-reacty-app dev"
+  }
 }
