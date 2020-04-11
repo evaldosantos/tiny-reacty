@@ -9,3 +9,4 @@ const App = (
 );
 
 reacty.render(App, document.getElementById('root'));
+reacty.render(App, document.getElementById('root'));
