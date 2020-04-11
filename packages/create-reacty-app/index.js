@@ -8,4 +8,4 @@ const App = (
   </div>
 );
 
-console.log(App)
+reacty.render(App, document.getElementById('root'));
