@@ -10,13 +10,6 @@ class Counter extends reacty.Component {
     this.state = {
       count: 0
     }
-
-    // update the count every second
-    setInterval(() => {
-      this.setState({
-        count: this.state.count + 1
-      })
-    }, 1000);
   }
 
   componentDidMount() {
@@ -24,7 +17,14 @@ class Counter extends reacty.Component {
   }
 
   render() {
-    return <p>Count: {this.state.count}</p>
+    return (
+      <div>
+        <p>Count: {this.state.count} <button onClick={() => this.setState({
+          count: this.state.count + 1
+        })}>Increment</button></p>
+        
+      </div>
+    )
   }
 }
 

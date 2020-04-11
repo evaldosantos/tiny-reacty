@@ -1,11 +1,17 @@
-import { h } from 'snabbdom';
 import * as snabbdom from 'snabbdom';
 import propsModule from 'snabbdom/modules/props';
+import eventlistenersModule from 'snabbdom/modules/eventlisteners';
+
+const h = snabbdom.h;
 
 // propsModule -> this helps in patching text attributes
-const reconcile = snabbdom.init([propsModule]);
+const reconcile = snabbdom.init([propsModule, eventlistenersModule]);
 
 const createElement = (type, props = {}, ...children) => {
+
+  let dataProps = {};
+  let eventProps = {};
+  
   // if type is a Class then
   // 1. create a instance of the Class
   // 2. call the render method on the Class instance
@@ -29,7 +35,25 @@ const createElement = (type, props = {}, ...children) => {
     return type(props);
   }
 
-  return h(type, { props }, children);
+  props = props || {};
+
+  // This is to seperate out the text attributes and event listener attributes
+  for(let propKey in props) {
+    // event props always startwith on eg. onClick, onChange etc.
+    if (propKey.startsWith('on')) {
+      // onClick -> click
+      const event = propKey.substring(2).toLowerCase();
+
+      eventProps[event] = props[propKey];
+    }
+    else {
+      dataProps[propKey] = props[propKey];
+    }
+  }
+
+  // props -> snabbdom's internal text attributes
+  // on -> snabbdom's internal event listeners attributes
+  return h(type, { props: dataProps, on: eventProps }, children);
 };
 
 const render = (function(reconcile) {
@@ -55,6 +79,7 @@ class Component {
 
   componentDidMount() { }
 
+  // reference https://overreacted.io/how-does-setstate-know-what-to-do/
   setState(partialState) {
     // update the state by adding the partial state
     this.state = {
