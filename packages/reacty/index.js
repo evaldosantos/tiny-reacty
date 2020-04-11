@@ -15,6 +15,13 @@ const createElement = (type, props = {}, ...children) => {
     // remember the current vNode instance
     componentInstance.__vNode = componentInstance.render();
 
+    // add hook to snabbdom virtual node to know whether it was added to the actual DOM
+    componentInstance.__vNode.data.hook = {
+      create: () => {
+        componentInstance.componentDidMount()
+      }
+    }
+
     return componentInstance.__vNode;
   }
   // if type is a function then call it and return it's value
@@ -72,8 +79,16 @@ const reacty = {
   render
 };
 
-reacty.__updater = () => {
+reacty.__updater = (componentInstance) => {
+  // logic on how to update the DOM when you call this.setState
 
+  // get the oldVNode stored in __vNode
+  const oldVNode = componentInstance.__vNode;
+  // find the updated DOM node by calling the render method
+  const newVNode = componentInstance.render();
+
+  // update the __vNode property with updated __vNode
+  componentInstance.__vNode = reconcile(oldVNode, newVNode);
 }
 
 export default reacty;
