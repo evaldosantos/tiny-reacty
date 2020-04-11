@@ -8,4 +8,4 @@ const App = (
   </div>
 );
 
-console.log(reacty.name)
+console.log(App)
