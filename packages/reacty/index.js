@@ -1,3 +1,6 @@
+import createElement from './createElement';
+
 export default {
-  name: 'reacty'
+  name: 'reacty',
+  createElement
 };
