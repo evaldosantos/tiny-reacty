@@ -3,7 +3,7 @@ import reacty from '../reacty';
 const App = (
   <div>
     <h1 className="primary">
-      reacty is Quick and dirty react
+      reacty is quick and dirty react
     </h1>
   </div>
 );
